@@ -1,0 +1,2 @@
+# 96A9B28ECD799D20168D59D26C198FAADAAE0BC21C8541F1918150EFFA440C86
+Repositorio para la solución de la prueba técnica de Resocentro
