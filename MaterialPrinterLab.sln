@@ -9,11 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.BusinessLayer", "02.Busi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03.EntitiesLayer", "03.EntitiesLayer", "{DD7D29FE-3D5B-441E-B4D1-8B46C1D7C1EC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.UserInterfaceLayer", "04.UserInterfaceLayer", "{D417FAB2-2F6B-4BC7-8568-6FB86D2E2F20}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04.ApiLayer", "04.ApiLayer", "{D417FAB2-2F6B-4BC7-8568-6FB86D2E2F20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DA.MaterialPrinterLab", "DA.MaterialPrinterLab\DA.MaterialPrinterLab.csproj", "{1411810C-1D0C-4726-B0BF-2FA152CD4EFF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EL.MaterialPrinterLab", "EL.MaterialPrinterLab\EL.MaterialPrinterLab.csproj", "{CBA0B96F-142D-4396-B1D2-7415FD837766}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL.MaterialPrinterLab", "BL.MaterialPrinterLab\BL.MaterialPrinterLab.csproj", "{AD7D0F0D-F5D6-4192-B1E5-9024C352853A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiMaterialPrinterLab", "ApiMaterialPrinterLab\ApiMaterialPrinterLab.csproj", "{6C51DE74-E11A-4C10-AD5D-E4274D72F604}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +33,14 @@ Global
 		{CBA0B96F-142D-4396-B1D2-7415FD837766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBA0B96F-142D-4396-B1D2-7415FD837766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBA0B96F-142D-4396-B1D2-7415FD837766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD7D0F0D-F5D6-4192-B1E5-9024C352853A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD7D0F0D-F5D6-4192-B1E5-9024C352853A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD7D0F0D-F5D6-4192-B1E5-9024C352853A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD7D0F0D-F5D6-4192-B1E5-9024C352853A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C51DE74-E11A-4C10-AD5D-E4274D72F604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C51DE74-E11A-4C10-AD5D-E4274D72F604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C51DE74-E11A-4C10-AD5D-E4274D72F604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C51DE74-E11A-4C10-AD5D-E4274D72F604}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +48,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1411810C-1D0C-4726-B0BF-2FA152CD4EFF} = {110AAB68-8112-469C-BC01-11EC75EA7F9B}
 		{CBA0B96F-142D-4396-B1D2-7415FD837766} = {DD7D29FE-3D5B-441E-B4D1-8B46C1D7C1EC}
+		{AD7D0F0D-F5D6-4192-B1E5-9024C352853A} = {B50392FE-C57E-4295-9EE4-51664419BC25}
+		{6C51DE74-E11A-4C10-AD5D-E4274D72F604} = {D417FAB2-2F6B-4BC7-8568-6FB86D2E2F20}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {153CA00F-51F0-4158-B3FC-33A89666D8AB}

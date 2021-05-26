@@ -32,7 +32,6 @@ namespace EL.MaterialPrinterLab.Models
         public DateTime FechaEjecucion { get; set; }
 
         public DateTime FechaFinalizacion { get; set; }
-
     }
 
     public enum EstadoOrden

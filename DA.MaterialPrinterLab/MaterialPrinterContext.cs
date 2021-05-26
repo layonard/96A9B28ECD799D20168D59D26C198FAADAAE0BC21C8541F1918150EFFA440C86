@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace DA.MaterialPrinterLab
 {
-    public class ImpresorasContext : DbContext
+    public class MaterialPrinterContext : DbContext
     {
-        public ImpresorasContext(DbContextOptions options) : base(options) { }
+        public MaterialPrinterContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Impresora> Impresoras { get; set; }
