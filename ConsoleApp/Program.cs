@@ -8,9 +8,12 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            var itemsManager = new ItemsManager("Data Source=localhost;Initial Catalog=MaterialPrinterLab; Integrated Security=True;");
+            var dataInicialManager = new DataInicialManager("Data Source=localhost;Initial Catalog=MaterialPrinterLab; Integrated Security=True;");
 
-            itemsManager.ImportarDatosIniciales();
+            //dataInicialManager.ImportarDatosIniciales();
+            dataInicialManager.CrearImpresoras(150);
+
+            Console.WriteLine("Datos insertados");
         }
 
     }

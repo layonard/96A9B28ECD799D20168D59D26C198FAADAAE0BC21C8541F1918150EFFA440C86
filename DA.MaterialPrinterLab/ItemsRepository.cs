@@ -17,7 +17,7 @@ namespace DA.MaterialPrinterLab
             _db = db;
         }
 
-        public List<Item> ObtenerItems()
+        public List<Item> ObtenerTodo()
         {
             try
             {
@@ -32,13 +32,12 @@ namespace DA.MaterialPrinterLab
                 //return new List<Item>();
             }
         }
-        public Item ObtenerItem(int id)
+        public Item Obtener(int id)
         {
             try
             {
                 return _db.Items
-                    .Where(i => i.Id == id)
-                    .FirstOrDefault();
+                    .FirstOrDefault(i => i.Id == id);
             }
             catch (Exception e)
             {
@@ -47,13 +46,12 @@ namespace DA.MaterialPrinterLab
             }
         }
 
-        public Item ObtenerItem(string nombre)
+        public Item Obtener(string nombre)
         {
             try
             {
                 return _db.Items
-                    .Where(i => i.Nombre == nombre)
-                    .FirstOrDefault();
+                    .FirstOrDefault(i => i.Nombre == nombre);
             }
             catch (Exception e)
             {
@@ -62,7 +60,7 @@ namespace DA.MaterialPrinterLab
             }
         }
 
-        public int ContarItems()
+        public int Contar()
         {
             try
             {
