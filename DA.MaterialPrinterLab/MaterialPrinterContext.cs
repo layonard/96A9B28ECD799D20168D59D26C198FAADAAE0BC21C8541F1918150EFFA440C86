@@ -28,7 +28,9 @@ namespace DA.MaterialPrinterLab
         }
 
         public DbSet<Item> Items { get; set; }
+        public DbSet<Receta> Recetas { get; set; }
         public DbSet<Impresora> Impresoras { get; set; }
         public DbSet<OrdenImpresion> Ordenes { get; set; }
+
     }
 }

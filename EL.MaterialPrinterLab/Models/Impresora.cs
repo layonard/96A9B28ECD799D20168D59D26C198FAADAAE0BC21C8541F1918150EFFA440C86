@@ -19,6 +19,6 @@ namespace EL.MaterialPrinterLab.Models
         [Required]
         public bool Imprimiendo { get; set; }
 
-        public List<Item> Cola { get; set; }
+        //public List<Item> Cola { get; set; }
     }
 }
