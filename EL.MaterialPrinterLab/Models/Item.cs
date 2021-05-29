@@ -25,6 +25,6 @@ namespace EL.MaterialPrinterLab.Models
         [Required]
         public bool EsBase { get; set; }
 
-        public List<Item> Receta { get; set; }
+        public List<Receta> Receta { get; set; }
     }
 }
