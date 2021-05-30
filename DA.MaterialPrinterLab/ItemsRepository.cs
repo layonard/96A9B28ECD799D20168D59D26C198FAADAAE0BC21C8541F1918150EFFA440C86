@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EL.MaterialPrinterLab.Models;
+using EL.MaterialPrinterLab.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace DA.MaterialPrinterLab
@@ -37,6 +37,7 @@ namespace DA.MaterialPrinterLab
             try
             {
                 return _db.Items
+                    .Include(i => i.Receta)
                     .FirstOrDefault(i => i.Id == id);
             }
             catch (Exception e)
@@ -87,12 +88,13 @@ namespace DA.MaterialPrinterLab
             }
         }
 
-        public void Insertar(List<Item> items)
+        public List<Item> Insertar(List<Item> items)
         {
             try
             {
                 _db.Items.AddRange(items);
                 _db.SaveChanges();
+                return items;
             }
             catch (Exception e)
             {

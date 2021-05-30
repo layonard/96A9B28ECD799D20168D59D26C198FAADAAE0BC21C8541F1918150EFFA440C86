@@ -5,19 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using DA.MaterialPrinterLab;
 using EL.MaterialPrinterLab;
-using EL.MaterialPrinterLab.Models;
+using EL.MaterialPrinterLab.Model;
 
 namespace BL.MaterialPrinterLab
 {
     public class DataInicialManager
     {
         private ItemsRepository itemsRespository;
+        private RecetaRepository recetaRespository;
         private ImpresorasRepository impresorasRepository;
 
         public DataInicialManager(string CadenaConexion)
         {
             var dbAccess = new MaterialPrinterContext(CadenaConexion);
             itemsRespository = new ItemsRepository(dbAccess);
+            recetaRespository = new RecetaRepository(dbAccess);
             impresorasRepository = new ImpresorasRepository(dbAccess);
         }
 
@@ -42,11 +44,14 @@ namespace BL.MaterialPrinterLab
                 nuevoItem.Tiempo = Int32.TryParse(columnas[12], out resultado) ? resultado : 0;
                 nuevoItem.Stock = Int32.TryParse(columnas[13], out resultado) ? resultado : 0;
                 nuevoItem.EsBase = columnas[14] == "V";
-                nuevoItem.Receta = new List<Receta>();
+                //nuevoItem.Receta = new List<Insumo>();
 
                 listaItems.Add((nuevoItem));
             }
+            listaItems = itemsRespository.Insertar(listaItems);
+
             //Leer los insumos de la receta
+            var listaRecetas = new List<Insumo>();
             foreach (var linea in lineas)
             {
                 var columnas = linea.Split(',');
@@ -60,21 +65,21 @@ namespace BL.MaterialPrinterLab
                     var cantidadInsumo = columnas[i * 2 + 1];
                     if (!String.IsNullOrEmpty(nombreInsumo))
                     {
-                        var resultado = 0;
                         var item = listaItems.FirstOrDefault(i => i.Nombre == columnas[1]);
                         var insumo = listaItems.FirstOrDefault(i => i.Nombre == nombreInsumo);
 
-                        item.Receta.Add(
-                            new Receta
+                        listaRecetas.Add(
+                            new Insumo
                             {
-                                Insumo = insumo,
-                                Cantidad = Int32.TryParse(cantidadInsumo, out resultado) ? resultado : 0
+                                ItemId = item.Id,
+                                InsumoId = insumo.Id,
+                                Cantidad = Int32.TryParse(cantidadInsumo, out int parsed) ? parsed : 0
                             });
                     }
                 }
             }
 
-            itemsRespository.Insertar(listaItems);
+            recetaRespository.Insertar(listaRecetas);
         }
 
         public void CrearImpresoras(int cantidadImpresoras)
