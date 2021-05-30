@@ -10,7 +10,6 @@ namespace EL.MaterialPrinterLab.Model
 {
     public class Insumo
     {
-        public int Id { get; set; }
 
         [Required]
         [ForeignKey("Item")]

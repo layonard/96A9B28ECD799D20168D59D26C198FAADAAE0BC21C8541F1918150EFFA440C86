@@ -29,6 +29,9 @@ namespace DA.MaterialPrinterLab
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Insumo>()
+                .HasKey(i => new { i.ItemId, i.InsumoId});
+
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
