@@ -6,14 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EL.MaterialPrinterLab.Models
+namespace EL.MaterialPrinterLab.Model
 {
     public class OrdenImpresion
     {
         public int Id { get; set; }
 
         [Required]
-        public Item ItemFinal { get; set; }
+        public Item Item { get; set; }
 
         [Required]
         public Impresora Impresora { get; set; }

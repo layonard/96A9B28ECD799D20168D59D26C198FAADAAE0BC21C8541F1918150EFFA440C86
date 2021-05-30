@@ -4,14 +4,16 @@ using DA.MaterialPrinterLab;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DA.MaterialPrinterLab.Migrations
 {
     [DbContext(typeof(MaterialPrinterContext))]
-    partial class MaterialPrinterContextModelSnapshot : ModelSnapshot
+    [Migration("20210530200642_ModifNombreItemOrdenImpresion")]
+    partial class ModifNombreItemOrdenImpresion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,4 +1,4 @@
-﻿using EL.MaterialPrinterLab.Models;
+﻿using EL.MaterialPrinterLab.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,8 +27,16 @@ namespace DA.MaterialPrinterLab
             }
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+        }
+
         public DbSet<Item> Items { get; set; }
-        public DbSet<Receta> Recetas { get; set; }
+        public DbSet<Insumo> Recetas { get; set; }
         public DbSet<Impresora> Impresoras { get; set; }
         public DbSet<OrdenImpresion> Ordenes { get; set; }
 

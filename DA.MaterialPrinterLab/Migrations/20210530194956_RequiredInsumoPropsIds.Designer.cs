@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DA.MaterialPrinterLab.Migrations
 {
     [DbContext(typeof(MaterialPrinterContext))]
-    [Migration("20210529130130_CreacionInicialBD")]
-    partial class CreacionInicialBD
+    [Migration("20210530194956_RequiredInsumoPropsIds")]
+    partial class RequiredInsumoPropsIds
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace DA.MaterialPrinterLab.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.Impresora", b =>
+            modelBuilder.Entity("EL.MaterialPrinterLab.Model.Impresora", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -40,7 +40,32 @@ namespace DA.MaterialPrinterLab.Migrations
                     b.ToTable("Impresoras");
                 });
 
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.Item", b =>
+            modelBuilder.Entity("EL.MaterialPrinterLab.Model.Insumo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InsumoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InsumoId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Recetas");
+                });
+
+            modelBuilder.Entity("EL.MaterialPrinterLab.Model.Item", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,9 +74,6 @@ namespace DA.MaterialPrinterLab.Migrations
 
                     b.Property<bool>("EsBase")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("ImpresoraId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -65,12 +87,10 @@ namespace DA.MaterialPrinterLab.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImpresoraId");
-
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.OrdenImpresion", b =>
+            modelBuilder.Entity("EL.MaterialPrinterLab.Model.OrdenImpresion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -109,67 +129,40 @@ namespace DA.MaterialPrinterLab.Migrations
                     b.ToTable("Ordenes");
                 });
 
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.Receta", b =>
+            modelBuilder.Entity("EL.MaterialPrinterLab.Model.Insumo", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasOne("EL.MaterialPrinterLab.Model.Item", "InsumoItem")
+                        .WithMany()
+                        .HasForeignKey("InsumoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<int>("Cantidad")
-                        .HasColumnType("int");
+                    b.HasOne("EL.MaterialPrinterLab.Model.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<int>("InsumoId")
-                        .HasColumnType("int");
+                    b.Navigation("InsumoItem");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("InsumoId");
-
-                    b.ToTable("Receta");
+                    b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.Item", b =>
+            modelBuilder.Entity("EL.MaterialPrinterLab.Model.OrdenImpresion", b =>
                 {
-                    b.HasOne("EL.MaterialPrinterLab.Models.Impresora", null)
-                        .WithMany("Cola")
-                        .HasForeignKey("ImpresoraId");
-                });
-
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.OrdenImpresion", b =>
-                {
-                    b.HasOne("EL.MaterialPrinterLab.Models.Impresora", "Impresora")
+                    b.HasOne("EL.MaterialPrinterLab.Model.Impresora", "Impresora")
                         .WithMany()
-                        .HasForeignKey("ImpresoraId");
+                        .HasForeignKey("ImpresoraId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("EL.MaterialPrinterLab.Models.Item", "ItemFinal")
+                    b.HasOne("EL.MaterialPrinterLab.Model.Item", "ItemFinal")
                         .WithMany()
-                        .HasForeignKey("ItemFinalId");
+                        .HasForeignKey("ItemFinalId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Impresora");
 
                     b.Navigation("ItemFinal");
-                });
-
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.Receta", b =>
-                {
-                    b.HasOne("EL.MaterialPrinterLab.Models.Item", "Insumo")
-                        .WithMany("Receta")
-                        .HasForeignKey("InsumoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Insumo");
-                });
-
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.Impresora", b =>
-                {
-                    b.Navigation("Cola");
-                });
-
-            modelBuilder.Entity("EL.MaterialPrinterLab.Models.Item", b =>
-                {
-                    b.Navigation("Receta");
                 });
 #pragma warning restore 612, 618
         }

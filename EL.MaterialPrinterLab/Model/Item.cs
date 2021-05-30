@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EL.MaterialPrinterLab.Models
+namespace EL.MaterialPrinterLab.Model
 {
-    public class Impresora
+    public class Item
     {
         public int Id { get; set; }
 
@@ -17,8 +17,15 @@ namespace EL.MaterialPrinterLab.Models
         public string Nombre { get; set; }
 
         [Required]
-        public bool Imprimiendo { get; set; }
+        public int Tiempo { get; set; }
 
-        //public List<Item> Cola { get; set; }
+        [Required]
+        public int Stock { get; set; }
+
+        [Required]
+        public bool EsBase { get; set; }
+
+        [NotMapped]
+        public List<Insumo> Receta { get; set; }
     }
 }
