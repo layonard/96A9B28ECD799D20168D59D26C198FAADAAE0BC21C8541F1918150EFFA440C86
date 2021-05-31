@@ -35,6 +35,15 @@ Impresora Sci-Fi 3D de Materia
 - Al imprimir **Cola de fénix** con los datos iniciales de CSV. 
   - Solo se imprime el item debido a que existen todos los insumos
   - El tiempo total es de 120
+- Nomenclatura ConsoleApp: 
+  - **Item**: el item a fabricar. 
+  - **Insumo**: el insumo necesario para el item. 
+  - **cNE**: Cantidad Necesaria (de la receta). 
+  - **cEx**: Cantidad existente stock del Item. 
+  - **SeImp**: Se imprime? Si se requiere imprimir el insumo. 
+  - **cIm**: Cantidad a imprimir. 
+  - **Tmp**: Tiempo en crear un solo insumo. 
+  - **Impresora**: Impresora a la cual puede asignarse
   
 ![image](https://user-images.githubusercontent.com/2180309/120219108-b2c95d00-c208-11eb-8740-4bb865b4348a.png)
 
