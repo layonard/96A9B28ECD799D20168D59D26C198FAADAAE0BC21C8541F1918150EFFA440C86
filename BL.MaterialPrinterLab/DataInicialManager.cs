@@ -12,14 +12,14 @@ namespace BL.MaterialPrinterLab
     public class DataInicialManager
     {
         private ItemsRepository itemsRespository;
-        private RecetaRepository recetaRespository;
+        private RecetasRepository recetaRespository;
         private ImpresorasRepository impresorasRepository;
 
         public DataInicialManager(string CadenaConexion)
         {
             var dbAccess = new MaterialPrinterContext(CadenaConexion);
             itemsRespository = new ItemsRepository(dbAccess);
-            recetaRespository = new RecetaRepository(dbAccess);
+            recetaRespository = new RecetasRepository(dbAccess);
             impresorasRepository = new ImpresorasRepository(dbAccess);
         }
 

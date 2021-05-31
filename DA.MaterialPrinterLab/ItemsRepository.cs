@@ -21,9 +21,7 @@ namespace DA.MaterialPrinterLab
         {
             try
             {
-                return _db.Items
-                    .Include(i => i.Receta)
-                    .ToList();
+                return _db.Items.ToList();
             }
             catch (Exception e)
             {
@@ -36,9 +34,7 @@ namespace DA.MaterialPrinterLab
         {
             try
             {
-                return _db.Items
-                    .Include(i => i.Receta)
-                    .FirstOrDefault(i => i.Id == id);
+                return _db.Items.FirstOrDefault(i => i.Id == id);
             }
             catch (Exception e)
             {
@@ -51,8 +47,7 @@ namespace DA.MaterialPrinterLab
         {
             try
             {
-                return _db.Items
-                    .FirstOrDefault(i => i.Nombre == nombre);
+                return _db.Items.FirstOrDefault(i => i.Nombre == nombre);
             }
             catch (Exception e)
             {
