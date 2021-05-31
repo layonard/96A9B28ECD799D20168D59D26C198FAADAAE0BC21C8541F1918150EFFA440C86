@@ -17,5 +17,7 @@ namespace EL.MaterialPrinterLab.Reportes
         public bool SeImprime { get; set; }
         public int CantidadAImprimir { get; set; }
         public int Tiempo { get; set; }
+        public int ImpresoraId { get; set; }
+        public string ImpresoraNombre { get; set; }
     }
 }

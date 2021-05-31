@@ -13,6 +13,7 @@ namespace BL.MaterialPrinterLab
     {
         private ItemsRepository itemsRespository;
         private ItemsManager itemsManager;
+        private ImpresorasManager impresorasManager;
         private RecetasRepository recetasRespository;
 
         public ReportesManager(string CadenaConexion)
@@ -20,12 +21,15 @@ namespace BL.MaterialPrinterLab
             var dbAccess = new MaterialPrinterContext(CadenaConexion);
             itemsRespository = new ItemsRepository(dbAccess);
             itemsManager = new ItemsManager(CadenaConexion);
+            impresorasManager = new ImpresorasManager(CadenaConexion);
             recetasRespository = new RecetasRepository(dbAccess);
         }
 
-        public List<ReporteVerificarImpresionItem> GenerarReporteConsultaReceta(int id)
+        public List<ReporteVerificarImpresionItem> GenerarReporteConsultaReceta(int id, bool usarVariasIMpresoras = false)
         {
             var listaReceta = new List<ReporteVerificarImpresionItem>();
+            var listaImpresorasLibres = impresorasManager.ObtenerImpresorasLibres();
+            var impresora = listaImpresorasLibres.FirstOrDefault();
 
             var item = itemsManager.ObtenerItemConRecetasCompletas(id);
             var registroReporte = new ReporteVerificarImpresionItem();
@@ -36,13 +40,32 @@ namespace BL.MaterialPrinterLab
             registroReporte.SeImprime = true;
             registroReporte.CantidadAImprimir = 1;
             registroReporte.Tiempo = item.Tiempo;
+            if (impresora != null)
+            {
+                registroReporte.ImpresoraId = impresora.Id;
+                registroReporte.ImpresoraNombre = impresora.Nombre;
+                listaImpresorasLibres.Remove(impresora);
+            }
+            else
+            {
+                registroReporte.ImpresoraNombre = "(Impresoras no disponibles)";
+            }
+            
             listaReceta.Add(registroReporte);
-            listaReceta.AddRange(ConsultarReceta(item.Receta));
 
+            if (usarVariasIMpresoras)
+            {
+                listaReceta.AddRange(ConsultarReceta(item.Receta, 1, usarVariasIMpresoras, impresora, listaImpresorasLibres));
+            }
+            else
+            {
+                listaReceta.AddRange(ConsultarReceta(item.Receta,1, usarVariasIMpresoras, impresora));
+            }
+            
             return listaReceta;
         }
 
-        private List<ReporteVerificarImpresionItem> ConsultarReceta(List<Insumo> receta)
+        private List<ReporteVerificarImpresionItem> ConsultarReceta(List<Insumo> receta, int cantidadFaltante, bool usarVariasImpresoras, Impresora impresora, List<Impresora> impresoras = null)
         {
             var listaReceta = new List<ReporteVerificarImpresionItem>();
 
@@ -55,18 +78,46 @@ namespace BL.MaterialPrinterLab
                 registroReporte.NombreItem = insumo.Item.Nombre;
                 registroReporte.InsumoId = insumo.InsumoId;
                 registroReporte.NombreInsumo = insumo.InsumoItem.Nombre;
-                registroReporte.CantidadNecesaria = insumo.Cantidad;
+                registroReporte.CantidadNecesaria = insumo.Cantidad * cantidadFaltante;
                 registroReporte.CantidadExistente = insumo.InsumoItem.Stock;
                 registroReporte.SeImprime = diferenciaCantidad < 0;
                 registroReporte.CantidadAImprimir = registroReporte.SeImprime ? Math.Abs(diferenciaCantidad) : 0;
                 registroReporte.Tiempo = insumo.InsumoItem.Tiempo;
+                if (registroReporte.SeImprime)
+                {
+                    if (usarVariasImpresoras && impresoras.Any())
+                    {
+                        var nuevaImpresora = impresoras.FirstOrDefault();
+                        registroReporte.ImpresoraId = nuevaImpresora.Id;
+                        registroReporte.ImpresoraNombre = nuevaImpresora.Nombre;
+                        impresoras.Remove(nuevaImpresora);
+                    }
+                    else
+                    {
+                        if (impresora != null)
+                        {
+                            registroReporte.ImpresoraId = impresora.Id;
+                            registroReporte.ImpresoraNombre = impresora.Nombre;
+                        }
+                        else
+                        {
+                            registroReporte.ImpresoraNombre = "(Impresoras no disponibles)";
+                        }
+                    }
+                }
+                else
+                {
+                    registroReporte.ImpresoraNombre = "";
+                }
+                
+                
                 listaReceta.Add(registroReporte);
 
                 insumo.InsumoItem.Stock -= insumo.Cantidad;
 
                 if (registroReporte.SeImprime && !insumo.InsumoItem.EsBase)
                 {
-                    listaReceta.AddRange(ConsultarReceta(insumo.InsumoItem.Receta));
+                    listaReceta.AddRange(ConsultarReceta(insumo.InsumoItem.Receta, registroReporte.CantidadAImprimir, usarVariasImpresoras, impresora, impresoras));
                 }
             }
 

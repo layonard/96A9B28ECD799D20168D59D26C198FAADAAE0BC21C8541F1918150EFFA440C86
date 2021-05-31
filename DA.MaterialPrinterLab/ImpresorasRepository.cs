@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EL.MaterialPrinterLab.Models;
+using EL.MaterialPrinterLab.Model;
 
 namespace DA.MaterialPrinterLab
 {
@@ -36,6 +36,20 @@ namespace DA.MaterialPrinterLab
             {
                 return _db.Impresoras
                     .FirstOrDefault(i => i.Id == id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public Impresora ObtenerImpresoraLibre()
+        {
+            try
+            {
+                return _db.Impresoras
+                    .FirstOrDefault(i => !i.Imprimiendo);
             }
             catch (Exception e)
             {
