@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BL.MaterialPrinterLab;
 using EL.MaterialPrinterLab.Model;
@@ -14,6 +15,7 @@ namespace ConsoleApp
             var dataInicialManager = new DataInicialManager(connectionString);
             var itemManager = new ItemsManager(connectionString);
             var reportesManager = new ReportesManager(connectionString);
+            var ordenesManager = new OrdenesManager(connectionString, "UsuarioConsola");
 
             Console.WriteLine("---------------------------------");
             Console.WriteLine("Importar datos iniciales? Y / N");
@@ -37,13 +39,13 @@ namespace ConsoleApp
             switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.D1:
-                    itemSeleccionado = itemManager.ObtenerItemConReceta(400);
+                    itemSeleccionado = itemManager.ObtenerItemConReceta("Cola de fénix");
                     break;
                 case ConsoleKey.D2:
-                    itemSeleccionado = itemManager.ObtenerItemConReceta(356);
+                    itemSeleccionado = itemManager.ObtenerItemConReceta("Manzana");
                     break;
                 case ConsoleKey.D3:
-                    itemSeleccionado = itemManager.ObtenerItemConReceta(370);
+                    itemSeleccionado = itemManager.ObtenerItemConReceta("Potasio");
                     break;
             }
             if (itemSeleccionado.Id > 0)
@@ -54,13 +56,14 @@ namespace ConsoleApp
 
             //var itemSoloDebug = itemManager.ObtenerItemConRecetasCompletas(400);
 
+
             Console.WriteLine("\n---------------------------------");
             var reporteRecetas = reportesManager.GenerarReporteConsultaReceta(itemSeleccionado.Id, true);
 
             Console.WriteLine($"-- RECETA: {itemSeleccionado.Nombre}--");
-            Console.WriteLine($"\n{("Item").PadRight(15)}|{("Insumo").PadRight(15)}|{"cNe".PadLeft(3)}|{"cEx".PadLeft(3)}|{"SeImp".PadLeft(5)}|{"cIm".PadLeft(3)}|{"Tmp".PadLeft(3)}|Impresora");
+            Console.WriteLine($"\n{("Item").PadRight(20)}|{("Insumo").PadRight(20)}|{"cNe".PadLeft(3)}|{"cEx".PadLeft(3)}|{"SeImp".PadLeft(5)}|{"cIm".PadLeft(3)}|{"Tmp".PadLeft(3)}|Impresora");
             reporteRecetas.ForEach(i => 
-                {Console.WriteLine($"{i.NombreItem.PadRight(15)}|{i.NombreInsumo.PadRight(15)}|{i.CantidadNecesaria.ToString().PadLeft(3)}|{i.CantidadExistente.ToString().PadLeft(3)}|{i.SeImprime.ToString().PadLeft(5)}|{i.CantidadAImprimir.ToString().PadLeft(3)}|{i.Tiempo.ToString().PadLeft(3)}|{i.ImpresoraNombre.PadRight(15)}");});
+                {Console.WriteLine($"{i.NombreItem.PadRight(20)}|{i.NombreInsumo.PadRight(20)}|{i.CantidadNecesaria.ToString().PadLeft(3)}|{i.CantidadExistente.ToString().PadLeft(3)}|{i.SeImprime.ToString().PadLeft(5)}|{i.CantidadAImprimir.ToString().PadLeft(3)}|{i.Tiempo.ToString().PadLeft(3)}|{i.ImpresoraNombre.PadRight(15)}");});
             Console.WriteLine($"TIEMPO TOTAL 1 Impresora: {reporteRecetas.Where(rep => rep.SeImprime).Sum(rep => rep.Tiempo * rep.CantidadAImprimir)}");
             var impresorasAUsar = reporteRecetas.Where(rep => rep.SeImprime).GroupBy(rep => rep.ImpresoraId).Select(r => r.First()).ToList();
             var max = 0;
@@ -71,6 +74,10 @@ namespace ConsoleApp
                 max = suma > max ? suma : max;
             }
             Console.WriteLine($"TIEMPO TOTAL Varias Impresoras: {max}");
+
+            Console.WriteLine("\n---------------------------------");
+            Console.WriteLine("IMPRIMIR");
+            //var ordenesImpresion = ordenesManager.RealizarOrden(new List<int>() {itemSeleccionado.Id});
         }
 
     }

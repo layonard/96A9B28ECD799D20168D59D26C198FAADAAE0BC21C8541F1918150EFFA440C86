@@ -4,14 +4,16 @@ using DA.MaterialPrinterLab;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DA.MaterialPrinterLab.Migrations
 {
     [DbContext(typeof(MaterialPrinterContext))]
-    partial class MaterialPrinterContextModelSnapshot : ModelSnapshot
+    [Migration("20210531111327_AdicionTablaSolicitudes")]
+    partial class AdicionTablaSolicitudes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,7 +103,7 @@ namespace DA.MaterialPrinterLab.Migrations
                     b.Property<DateTime>("FechaFinalizacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ImpresoraId")
+                    b.Property<int>("ImpresoraId")
                         .HasColumnType("int");
 
                     b.Property<int>("ItemId")
@@ -164,7 +166,8 @@ namespace DA.MaterialPrinterLab.Migrations
                     b.HasOne("EL.MaterialPrinterLab.Model.Impresora", "Impresora")
                         .WithMany()
                         .HasForeignKey("ImpresoraId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("EL.MaterialPrinterLab.Model.Item", "Item")
                         .WithMany()

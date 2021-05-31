@@ -72,7 +72,7 @@ namespace BL.MaterialPrinterLab
             foreach (var insumo in receta)
             {
                 var registroReporte = new ReporteVerificarImpresionItem();
-                var diferenciaCantidad = insumo.InsumoItem.Stock - insumo.Cantidad;
+                var diferenciaCantidad = insumo.InsumoItem.Stock - (insumo.Cantidad * cantidadFaltante);
 
                 registroReporte.ItemId = insumo.ItemId;
                 registroReporte.NombreItem = insumo.Item.Nombre;
@@ -113,7 +113,7 @@ namespace BL.MaterialPrinterLab
                 
                 listaReceta.Add(registroReporte);
 
-                insumo.InsumoItem.Stock -= insumo.Cantidad;
+                insumo.InsumoItem.Stock = insumo.Cantidad < 0? 0 : insumo.Cantidad;
 
                 if (registroReporte.SeImprime && !insumo.InsumoItem.EsBase)
                 {
