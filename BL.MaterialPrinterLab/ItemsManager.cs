@@ -28,6 +28,13 @@ namespace BL.MaterialPrinterLab
 
             return item;
         }
+        public Item ObtenerItemConReceta(string nombre)
+        {
+            var item = itemsRespository.Obtener(nombre);
+            item.Receta = recetasRespository.Consultar(item.Id);
+
+            return item;
+        }
 
         public Item ObtenerItemConRecetasCompletas(int id)
         {

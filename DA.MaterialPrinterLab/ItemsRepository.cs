@@ -98,5 +98,21 @@ namespace DA.MaterialPrinterLab
             }
         }
 
+        public Item IncrementarStock(Item item, int cantidad)
+        {
+            try
+            {
+                _db.Items.FirstOrDefault(i => i.Id == item.Id).Stock+= cantidad;
+
+                _db.SaveChanges();
+                return item;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
     }
 }

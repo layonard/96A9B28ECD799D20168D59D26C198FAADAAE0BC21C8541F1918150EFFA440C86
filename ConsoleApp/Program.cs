@@ -77,7 +77,7 @@ namespace ConsoleApp
 
             Console.WriteLine("\n---------------------------------");
             Console.WriteLine("IMPRIMIR");
-            //var ordenesImpresion = ordenesManager.RealizarOrden(new List<int>() {itemSeleccionado.Id});
+            var ordenesImpresion = ordenesManager.RealizarOrden(new List<int>() {itemSeleccionado.Id});
         }
 
     }
