@@ -21,10 +21,28 @@ namespace BL.MaterialPrinterLab
             recetasRespository = new RecetasRepository(dbAccess);
         }
 
-        public Item ObtenerItem(int id)
+        public Item ObtenerItemConReceta(int id)
         {
             var item = itemsRespository.Obtener(id);
             item.Receta = recetasRespository.Consultar(id);
+
+            return item;
+        }
+
+        public Item ObtenerItemConRecetasCompletas(int id)
+        {
+            var item = itemsRespository.Obtener(id);
+            item.Receta = recetasRespository.Consultar(id);
+
+            foreach (var insumo in item.Receta)
+            {
+                if (insumo.InsumoItem.EsBase)
+                {
+                    continue;
+                }
+
+                insumo.InsumoItem = ObtenerItemConRecetasCompletas(insumo.InsumoId);
+            }
 
             return item;
         }
